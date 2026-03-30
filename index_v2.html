@@ -1,0 +1,2389 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR" style="scroll-behavior: auto;">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>ABMEN | Interface Institucional V2</title>
+
+<link href="assets/poppins_12b8b848db71.css" media="all" rel="stylesheet"/>
+<link href="assets/roboto_e614dbc4bdd9.css" media="all" rel="stylesheet"/>
+<link href="Design Systems Referencias/temas_claros/parallax-geometry/assets/css2_5f62d382f7c0.css" rel="stylesheet"/>
+<link href="assets/faveicon_5b14bf7f697e.webp" rel="icon" sizes="32x32"/>
+
+<script src="Design Systems Referencias/temas_claros/parallax-geometry/assets/gsap_4a57399e4113.js"></script>
+<script src="Design Systems Referencias/temas_claros/parallax-geometry/assets/ScrollTrigger_8669edfeb171.js"></script>
+<script src="Design Systems Referencias/temas_claros/white-medical/assets/iconify_654a1ef798a3.js"></script>
+
+<style>
+@font-face {
+  font-family: "madefor-display-bold";
+  src: url("Design Systems Referencias/componentes/wix.com_studio_design_inspiration_spac/assets/madefor-display-bold_2efb43704c07.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "madefor-text";
+  src: url("Design Systems Referencias/componentes/wix.com_studio_design_inspiration_spac/assets/madefor-text_d2c633af5292.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --graphite: #08110B;
+  --obsidian: #0C0C0C;
+  --ink: #152118;
+  --text-strong: #101B12;
+  --text-body: #2B3A2F;
+  --text-muted: #5B6A5F;
+  --mist: #F5F4F3;
+  --cloud: #EAF2EC;
+  --line: rgba(255, 255, 255, 0.12);
+  --line-dark: rgba(8, 17, 11, 0.10);
+  --pulse-lime: #1DE90E;
+  --emerald-grid: #33A457;
+  --sky-beam: #0EA5E9;
+  --muted-dark: rgba(8, 17, 11, 0.72);
+  --muted-light: rgba(255, 255, 255, 0.72);
+  --shadow-xl: 0 32px 90px rgba(2, 12, 6, 0.24);
+  --shadow-green: 0 24px 60px rgba(29, 233, 14, 0.16);
+  --font_0: normal normal 700 clamp(3rem, 6vw, 5.4rem)/0.92em madefor-display-bold, "Poppins", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  overflow-x: hidden !important;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  color: var(--mist);
+  background:
+    radial-gradient(circle at top left, rgba(29, 233, 14, 0.10), rgba(29, 233, 14, 0) 34%),
+    radial-gradient(circle at top right, rgba(14, 165, 233, 0.09), rgba(14, 165, 233, 0) 28%),
+    linear-gradient(180deg, #050806 0%, #09120B 16%, #EAF0EB 44%, #F7F7F5 76%, #071008 100%);
+  padding-top: 84px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+#canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.44;
+  pointer-events: none;
+}
+
+.ds-grid-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.grid-line-v,
+.grid-line-h {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.grid-line-v {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.grid-line-h {
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.beam-h,
+.beam-v {
+  position: absolute;
+  opacity: 0;
+}
+
+.beam-h {
+  height: 1px;
+  width: 220px;
+  background: linear-gradient(90deg, transparent, var(--sky-beam), transparent);
+  animation: beam-h 8s linear infinite;
+}
+
+.beam-v {
+  width: 1px;
+  height: 220px;
+  background: linear-gradient(180deg, transparent, var(--pulse-lime), transparent);
+  animation: beam-v 9s linear infinite;
+}
+
+.ds-page {
+  position: relative;
+  z-index: 2;
+}
+
+.glass-card,
+.ds-panel,
+.site-feature-card,
+.site-showcase-card,
+.site-stat-card,
+.elementor-post__card.ds-post-card,
+.contact-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow-xl);
+}
+
+.glass-card::before,
+.ds-panel::before,
+.site-feature-card::before,
+.site-showcase-card::before,
+.site-stat-card::before,
+.elementor-post__card.ds-post-card::before,
+.contact-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0));
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.glow {
+  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 60px rgba(29, 233, 14, 0.10);
+}
+
+.font_0 {
+  font: var(--font_0);
+}
+
+.animate-reveal {
+  opacity: 0;
+  animation: reveal-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-100 { animation-delay: 0.10s; }
+.delay-200 { animation-delay: 0.20s; }
+.delay-300 { animation-delay: 0.30s; }
+.delay-400 { animation-delay: 0.40s; }
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ds-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  background: linear-gradient(180deg, rgba(5, 8, 6, 0.94), rgba(5, 8, 6, 0.62));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.ds-nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  min-height: 84px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.ds-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.ds-brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.ds-brand-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.ds-brand-copy strong {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ds-brand-copy span {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.58);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ds-nav-links {
+  flex: 1;
+  min-width: 0;
+}
+
+.elementor-nav-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.elementor-item {
+  color: rgba(255, 255, 255, 0.68);
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 14px;
+  border-radius: 999px;
+  transition: color 0.3s ease, background 0.3s ease;
+}
+
+.elementor-item:hover,
+.elementor-item:focus {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ds-nav-cta,
+.elementor-button,
+.glass-button,
+.StylableButton2545352419__root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease, color 0.28s ease;
+  overflow: hidden;
+}
+
+.ds-nav-cta,
+.elementor-button,
+.StylableButton2545352419__root {
+  color: #071008;
+  border: 1px solid rgba(29, 233, 14, 0.45);
+  background: linear-gradient(135deg, #A9FFA1 0%, #1DE90E 48%, #74D9FF 100%);
+  box-shadow: var(--shadow-green);
+}
+
+.glass-button {
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.button-sheen::before,
+.ds-nav-cta::before,
+.glass-button::before,
+.StylableButton2545352419__root::before {
+  content: "";
+  position: absolute;
+  inset: -40% auto -40% -120%;
+  width: 60%;
+  transform: rotate(20deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.34), transparent);
+  transition: left 0.7s ease;
+}
+
+.button-sheen:hover::before,
+.ds-nav-cta:hover::before,
+.glass-button:hover::before,
+.StylableButton2545352419__root:hover::before {
+  left: 160%;
+}
+
+.ds-nav-cta:hover,
+.elementor-button:hover,
+.glass-button:hover,
+.StylableButton2545352419__root:hover {
+  transform: translateY(-2px);
+}
+
+.hero-clone {
+  position: relative;
+  padding: 32px 0 24px;
+}
+
+.hero-clone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(29, 233, 14, 0.16), transparent 28%),
+    radial-gradient(circle at 84% 22%, rgba(14, 165, 233, 0.18), transparent 24%),
+    linear-gradient(135deg, rgba(5, 8, 6, 0.92), rgba(12, 12, 12, 0.82) 44%, rgba(8, 17, 11, 0.72) 100%);
+}
+
+.hero-clone::after {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+}
+
+.hero-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.96fr);
+  gap: 30px;
+  align-items: center;
+}
+
+.ds-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.80);
+}
+
+.ds-kicker .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--pulse-lime);
+  box-shadow: 0 0 18px rgba(29, 233, 14, 0.75);
+  animation: pulseGlow 2.2s ease-in-out infinite;
+}
+
+.hero-title {
+  margin: 0;
+  max-width: 11ch;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.hero-title-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-title-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(90deg, #9CF995 0%, #1DE90E 38%, #74D9FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-title-bar {
+  display: inline-block;
+  width: clamp(72px, 12vw, 136px);
+  height: 0.14em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), rgba(29, 233, 14, 0.82));
+  box-shadow: 0 0 22px rgba(29, 233, 14, 0.24);
+}
+
+.hero-desc {
+  max-width: 58ch;
+  margin: 18px 0 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: clamp(1rem, 1.16vw, 1.1rem);
+  line-height: 1.7;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.site-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.site-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.86);
+  font-family: "Poppins", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.payment-method,
+.ds-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.80);
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.payment-method.selected {
+  background: rgba(29, 233, 14, 0.16);
+  border-color: rgba(29, 233, 14, 0.42);
+  color: #fff;
+}
+
+.hero-stage {
+  min-height: 560px;
+}
+
+.hero-stack {
+  position: relative;
+  height: 100%;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(18px);
+  opacity: 0.95;
+  animation: orb-drift 9s ease-in-out infinite;
+}
+
+.hero-orb.one {
+  width: 180px;
+  height: 180px;
+  top: 24px;
+  right: 20px;
+  background: radial-gradient(circle, rgba(29, 233, 14, 0.42), rgba(29, 233, 14, 0));
+}
+
+.hero-orb.two {
+  width: 260px;
+  height: 260px;
+  bottom: 16px;
+  left: 0;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.26), rgba(14, 165, 233, 0));
+  animation-delay: -3s;
+}
+
+.hero-cloud {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.34;
+  mix-blend-mode: screen;
+}
+
+.hero-cloud.one {
+  width: 170px;
+  top: 24px;
+  left: -10px;
+  animation: float-card 8s ease-in-out infinite;
+}
+
+.hero-cloud.two {
+  width: 146px;
+  bottom: 0;
+  right: -18px;
+  animation: float-card 10s ease-in-out infinite reverse;
+}
+
+.hero-surface {
+  position: relative;
+  min-height: 540px;
+  padding: 20px;
+  border-radius: 34px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)),
+    radial-gradient(circle at top right, rgba(29, 233, 14, 0.16), transparent 32%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+}
+
+.hero-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent);
+  opacity: 0.32;
+}
+
+.hero-main-card {
+  position: relative;
+  z-index: 1;
+  min-height: 440px;
+  border-radius: 30px;
+  overflow: hidden;
+  background: rgba(10, 15, 12, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hero-main-card img {
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  object-fit: cover;
+  transform: scale(1.05);
+}
+
+.hero-main-overlay {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 22px 24px 24px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(5, 8, 6, 0.82) 52%, rgba(5, 8, 6, 0.92) 100%);
+}
+
+.hero-main-overlay strong {
+  display: block;
+  margin-bottom: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+.hero-main-overlay p {
+  margin: 0;
+  max-width: 34ch;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.hero-float-card {
+  position: absolute;
+  z-index: 2;
+  padding: 18px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.07));
+}
+
+.hero-float-card strong {
+  display: block;
+  margin-bottom: 10px;
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.56);
+}
+
+.hero-float-card p,
+.hero-float-card li {
+  margin: 0;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.hero-float-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.hero-float-card li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.hero-float-card.top {
+  top: 24px;
+  left: -20px;
+  width: 236px;
+}
+
+.hero-float-card.right {
+  top: 174px;
+  right: -18px;
+  width: 220px;
+}
+
+.hero-float-card.bottom {
+  left: 28px;
+  bottom: 26px;
+  width: 310px;
+}
+
+.ds-inline-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.ds-inline-list span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.hero-clip {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  width: 186px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+  z-index: 3;
+}
+
+.hero-clip img {
+  width: 100%;
+  height: 124px;
+  object-fit: cover;
+}
+
+.hero-clip-caption {
+  padding: 12px 14px;
+  background: rgba(7, 16, 8, 0.92);
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.ds-section {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 92px 24px 0;
+}
+
+.ds-section.is-light,
+.ds-section.is-dark {
+  margin-top: 52px;
+  padding: 56px 32px 0;
+  border-radius: 34px;
+}
+
+.ds-section.is-light {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 249, 246, 0.94));
+  border: 1px solid rgba(8, 17, 11, 0.10);
+  box-shadow: 0 24px 70px rgba(2, 12, 6, 0.12);
+}
+
+.ds-section.is-dark {
+  background: linear-gradient(180deg, rgba(8, 17, 11, 0.94), rgba(8, 17, 11, 0.82));
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: var(--shadow-xl);
+}
+
+.ds-heading-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 28px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.ds-section-label {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(8, 17, 11, 0.46);
+}
+
+.ds-section-title {
+  margin: 0;
+  max-width: 18ch;
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.ds-section-copy {
+  margin: 14px 0 0;
+  max-width: 62ch;
+  font-size: 1.05rem;
+  line-height: 1.72;
+}
+
+.is-light .ds-section-title,
+.is-light .site-feature-card h3,
+.is-light .elementor-post__card.ds-post-card h4,
+.is-light .method-card h3,
+.is-light .ds-panel.light h3,
+.is-light .ds-panel.light h4 {
+  color: var(--text-strong);
+}
+
+.is-light .ds-section-copy,
+.is-light .site-feature-card p,
+.is-light .elementor-post__card.ds-post-card p,
+.is-light .method-card p,
+.is-light .ds-panel.light p,
+.is-light .helper-text {
+  color: var(--text-body);
+}
+
+.is-light .ds-section-label,
+.is-light .eyebrow,
+.is-light .elementor-field-label {
+  color: var(--text-muted);
+}
+
+.is-dark .ds-section-label {
+  color: rgba(255, 255, 255, 0.46);
+}
+
+.is-dark .ds-section-title,
+.is-dark .ds-section-copy {
+  color: #fff;
+}
+
+.ds-panel.dark h3,
+.ds-panel.dark h4,
+.ds-panel.dark p {
+  color: #fff;
+}
+
+.ds-panel.dark p {
+  color: rgba(255, 255, 255, 0.78);
+}
+.capability-grid,
+.method-grid,
+.site-stat-grid,
+.showcase-grid,
+.site-article-grid,
+.contact-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.capability-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.method-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.site-stat-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.showcase-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.site-article-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.contact-grid {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.site-feature-card,
+.site-stat-card,
+.contact-card,
+.elementor-post__card.ds-post-card {
+  border-radius: 28px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.site-showcase-card {
+  min-height: 360px;
+  border-radius: 30px;
+  background: rgba(7, 16, 8, 0.86);
+}
+
+.site-showcase-card img {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+}
+
+.site-showcase-overlay {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 22px 24px 24px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(7, 16, 8, 0.82) 52%, rgba(7, 16, 8, 0.94) 100%);
+}
+
+.site-showcase-overlay h3 {
+  margin: 0 0 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.site-showcase-overlay p {
+  margin: 0;
+  max-width: 34ch;
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.6;
+}
+
+.feature-icon {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, rgba(29, 233, 14, 0.16), rgba(14, 165, 233, 0.10));
+  border: 1px solid rgba(29, 233, 14, 0.18);
+  color: var(--graphite);
+  font-size: 24px;
+}
+
+.site-feature-card h3,
+.site-stat-card h3,
+.elementor-post__card.ds-post-card h4,
+.contact-card h3 {
+  margin: 0 0 10px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.site-feature-card p,
+.site-stat-card p,
+.elementor-post__card.ds-post-card p,
+.contact-card p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(8, 17, 11, 0.54);
+}
+
+.site-stat-card .eyebrow {
+  color: rgba(255, 255, 255, 0.54);
+}
+
+.site-stat-card {
+  background: linear-gradient(180deg, rgba(9, 18, 11, 0.86), rgba(9, 18, 11, 0.72));
+}
+
+.site-stat-card h3,
+.site-stat-card p {
+  color: #fff;
+}
+
+.ds-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.ds-panel {
+  border-radius: 30px;
+  padding: 26px;
+}
+
+.ds-panel.light {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(8, 17, 11, 0.08);
+}
+
+.ds-panel.dark {
+  background: linear-gradient(180deg, rgba(9, 18, 11, 0.86), rgba(9, 18, 11, 0.74));
+}
+
+.ds-panel h3,
+.ds-panel h4 {
+  margin: 0 0 10px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.ds-panel p {
+  margin: 0;
+  line-height: 1.72;
+}
+
+.method-card {
+  position: relative;
+  padding: 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(8, 17, 11, 0.10);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 18px 40px rgba(2, 12, 6, 0.08);
+}
+
+.step-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, rgba(29, 233, 14, 0.16), rgba(14, 165, 233, 0.12));
+  border: 1px solid rgba(29, 233, 14, 0.18);
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+
+.method-card h3 {
+  margin: 0 0 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--obsidian);
+}
+
+.method-card p {
+  margin: 0;
+  color: rgba(8, 17, 11, 0.72);
+  line-height: 1.65;
+}
+
+.logo-ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.logo-ribbon span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(8, 17, 11, 0.08);
+  color: rgba(8, 17, 11, 0.78);
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.elementor-post__card.ds-post-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.elementor-post__thumbnail__link {
+  overflow: hidden;
+  border-radius: 22px;
+}
+
+.elementor-post__thumbnail__link img {
+  width: 100%;
+  aspect-ratio: 1.42 / 1;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.elementor-post__card.ds-post-card:hover .elementor-post__thumbnail__link img {
+  transform: scale(1.05);
+}
+
+.elementor-post__text {
+  display: grid;
+  gap: 10px;
+}
+
+.elementor-post__text h4,
+.elementor-post__text p {
+  margin: 0;
+}
+
+.section-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 24px;
+}
+
+.contact-card.dark {
+  background: linear-gradient(180deg, rgba(9, 18, 11, 0.88), rgba(9, 18, 11, 0.72));
+}
+
+.contact-card.dark h3,
+.contact-card.dark h4,
+.contact-card.dark p,
+.contact-card.dark li {
+  color: #fff;
+}
+
+.contact-card.dark p,
+.contact-card.dark li {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.contact-card.light {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(8, 17, 11, 0.10);
+}
+
+.contact-card.light h3,
+.contact-card.light h4 {
+  color: var(--text-strong);
+}
+
+.contact-card.light p,
+.contact-card.light li,
+.contact-card.light .helper-text {
+  color: var(--text-body);
+}
+
+.site-feature-card .payment-method,
+.elementor-post__card.ds-post-card .payment-method,
+.contact-card.light .payment-method {
+  color: var(--text-strong);
+  background: rgba(8, 17, 11, 0.06);
+  border-color: rgba(8, 17, 11, 0.14);
+}
+
+.site-feature-card .payment-method.selected,
+.elementor-post__card.ds-post-card .payment-method.selected,
+.contact-card.light .payment-method.selected {
+  color: #0a170d;
+  background: rgba(29, 233, 14, 0.24);
+  border-color: rgba(29, 233, 14, 0.42);
+}
+
+.contact-card.light .glass-button {
+  color: var(--text-strong);
+  border-color: rgba(8, 17, 11, 0.16);
+  background: rgba(8, 17, 11, 0.06);
+}
+
+.contact-card.light .glass-button:hover {
+  background: rgba(8, 17, 11, 0.10);
+  border-color: rgba(8, 17, 11, 0.24);
+}
+
+.info-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.10);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: default;
+}
+
+.info-tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%) translateY(6px);
+  width: min(260px, 82vw);
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(6, 12, 8, 0.95);
+  color: rgba(255, 255, 255, 0.88);
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+  line-height: 1.45;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 20;
+}
+
+.info-tooltip:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.site-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(3, 8, 5, 0.68);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+
+.site-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.site-modal-card {
+  width: min(540px, 100%);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(180deg, rgba(8, 17, 11, 0.96), rgba(8, 17, 11, 0.88));
+  box-shadow: var(--shadow-xl);
+  padding: 24px;
+}
+
+.site-modal-card h3 {
+  margin: 0 0 10px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.site-modal-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.7;
+}
+
+.site-modal-list {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.site-modal-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.6;
+}
+
+.site-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.contact-list {
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.6;
+}
+
+.contact-list .iconify {
+  margin-top: 2px;
+  color: var(--pulse-lime);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.form-grid .full {
+  grid-column: 1 / -1;
+}
+
+.elementor-field-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(8, 17, 11, 0.54);
+}
+
+.elementor-field {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(8, 17, 11, 0.12);
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--obsidian);
+  font: inherit;
+  outline: none;
+  transition: border-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+.elementor-field:focus {
+  border-color: rgba(29, 233, 14, 0.42);
+  box-shadow: 0 0 0 4px rgba(29, 233, 14, 0.10);
+}
+
+textarea.elementor-field {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.helper-text {
+  margin: 14px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.site-footer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 92px 24px 36px;
+}
+
+.site-footer-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: end;
+  padding: 26px;
+  border-radius: 30px;
+  background: linear-gradient(180deg, rgba(9, 18, 11, 0.90), rgba(9, 18, 11, 0.76));
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: var(--shadow-xl);
+}
+
+.site-footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.site-footer-brand img {
+  width: 62px;
+  height: 62px;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.site-footer-brand strong {
+  display: block;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.site-footer-brand span,
+.footer-note {
+  display: block;
+  color: rgba(255, 255, 255, 0.66);
+  line-height: 1.6;
+}
+
+.footer-note {
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.site-footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.76);
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.site-footer-links a:hover {
+  color: #fff;
+  border-color: rgba(29, 233, 14, 0.34);
+}
+
+.site-feature-card,
+.site-showcase-card,
+.site-stat-card,
+.elementor-post__card.ds-post-card,
+.method-card,
+.contact-card,
+.ds-panel {
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.site-feature-card:hover,
+.site-showcase-card:hover,
+.site-stat-card:hover,
+.elementor-post__card.ds-post-card:hover,
+.method-card:hover,
+.contact-card:hover,
+.ds-panel:hover {
+  transform: translateY(-4px);
+}
+
+.site-feature-card:hover,
+.method-card:hover {
+  border-color: rgba(29, 233, 14, 0.22);
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.65;
+  }
+}
+
+@keyframes beam-h {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(calc(100vw + 100px));
+    opacity: 0;
+  }
+}
+
+@keyframes beam-v {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(calc(100vh + 100px));
+    opacity: 0;
+  }
+}
+
+@keyframes orb-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(10px, -12px, 0);
+  }
+}
+
+@keyframes float-card {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 1180px) {
+  .hero-grid,
+  .ds-heading-row,
+  .contact-grid,
+  .ds-panel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stage {
+    min-height: auto;
+  }
+
+  .site-article-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 920px) {
+  body {
+    padding-top: 76px;
+  }
+
+  .ds-nav-inner {
+    min-height: 76px;
+    padding: 10px 18px;
+    flex-wrap: wrap;
+  }
+
+  .ds-nav-links {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .elementor-nav-menu {
+    justify-content: flex-start;
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .elementor-nav-menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .capability-grid,
+  .site-stat-grid,
+  .showcase-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .method-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ds-grid-stage {
+    display: none;
+  }
+
+  #canvas {
+    opacity: 0.26;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-shell,
+  .ds-section,
+  .site-footer {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .hero-clone::after {
+    inset: 10px;
+    border-radius: 28px;
+  }
+
+  .hero-title {
+    max-width: 10ch;
+  }
+
+  .hero-surface {
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .hero-main-card,
+  .hero-main-card img {
+    min-height: 340px;
+  }
+
+  .hero-float-card.top,
+  .hero-float-card.right,
+  .hero-float-card.bottom,
+  .hero-clip,
+  .hero-cloud {
+    position: relative;
+    inset: auto;
+    width: auto;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    margin-top: 14px;
+  }
+
+  .hero-clip img {
+    height: 180px;
+  }
+
+  .site-article-grid,
+  .form-grid,
+  .site-footer-card {
+    grid-template-columns: 1fr;
+  }
+
+  .method-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ds-nav-cta {
+    width: 100%;
+  }
+
+  .ds-section.is-light,
+  .ds-section.is-dark {
+    margin-top: 28px;
+    padding: 34px 18px 0;
+    border-radius: 24px;
+  }
+}
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<div class="ds-grid-stage" aria-hidden="true">
+  <div class="grid-line-v" style="left: 10%;"><div class="beam-v" style="left: 0; animation-delay: 0s;"></div></div>
+  <div class="grid-line-v" style="left: 34%;"><div class="beam-v" style="left: 0; animation-delay: 1.8s;"></div></div>
+  <div class="grid-line-v" style="left: 68%;"><div class="beam-v" style="left: 0; animation-delay: 3.4s;"></div></div>
+  <div class="grid-line-v" style="left: 88%;"><div class="beam-v" style="left: 0; animation-delay: 5s;"></div></div>
+  <div class="grid-line-h" style="top: 16%;"><div class="beam-h" style="top: 0; animation-delay: 0.4s;"></div></div>
+  <div class="grid-line-h" style="top: 42%;"><div class="beam-h" style="top: 0; animation-delay: 1.4s;"></div></div>
+  <div class="grid-line-h" style="top: 72%;"><div class="beam-h" style="top: 0; animation-delay: 2.2s;"></div></div>
+</div>
+
+<nav class="ds-nav elementor-nav-menu--main e--pointer-underline e--animation-fade">
+  <div class="ds-nav-inner">
+    <a class="ds-brand" href="#hero">
+      <img alt="ABMEN" src="assets/abmen-qoqinya2chitmldtwo08xaky_178a828738d2.webp"/>
+      <span class="ds-brand-copy">
+        <strong>ABMEN</strong>
+        <span>Mentoria de Neg&oacute;cios</span>
+      </span>
+    </a>
+
+    <div class="ds-nav-links elementor-nav-menu__container">
+      <ul class="elementor-nav-menu">
+        <li class="menu-item"><a class="elementor-item" href="#hero">In&iacute;cio</a></li>
+        <li class="menu-item"><a class="elementor-item" href="#atuacao">Atua&ccedil;&atilde;o</a></li>
+        <li class="menu-item"><a class="elementor-item" href="#impacto">Direcionamento</a></li>
+        <li class="menu-item"><a class="elementor-item" href="#ecossistema">Ecossistema</a></li>
+        <li class="menu-item"><a class="elementor-item" href="#conteudo">Conte&uacute;do</a></li>
+        <li class="menu-item"><a class="elementor-item" href="#contato">Contato</a></li>
+      </ul>
+    </div>
+
+    <a class="ds-nav-cta button-sheen" href="#contato">
+      <span class="iconify" data-icon="solar:chat-round-call-linear"></span>
+      Falar com a ABMEN
+    </a>
+  </div>
+</nav>
+
+<main class="ds-page">
+  <section class="hero-clone" id="hero">
+    <div class="hero-shell">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="ds-kicker animate-reveal delay-100">
+            <span class="dot"></span>
+            Associa&ccedil;&atilde;o Brasileira dos Mentores de Neg&oacute;cios
+          </div>
+
+          <h1 class="hero-title font_0">
+            <span class="hero-title-line">Clareza executiva</span>
+            <span class="hero-title-line hero-title-accent">
+              <span>para neg&oacute;cios</span>
+              <span class="hero-title-bar"></span>
+            </span>
+            <span class="hero-title-line">que precisam evoluir.</span>
+          </h1>
+
+          <p class="hero-desc animate-reveal delay-200">
+            A ABMEN &eacute; resultado da matura&ccedil;&atilde;o de atores do ecossistema de empreendedorismo e
+            inova&ccedil;&atilde;o no pa&iacute;s. Desde 2016, comunica a relev&acirc;ncia do Mentor de Neg&oacute;cios&reg; e apoia
+            empresas e institui&ccedil;&otilde;es com uma leitura profissional de <strong>estrat&eacute;gia, gest&atilde;o e governan&ccedil;a</strong>.
+          </p>
+
+          <div class="hero-actions animate-reveal delay-300">
+            <button class="elementor-button elementor-button-link elementor-size-sm button-sheen" data-open-modal="executive-modal" type="button">
+              <span class="elementor-button-content-wrapper">
+                <span class="elementor-button-text">Agendar conversa executiva</span>
+              </span>
+            </button>
+            <a class="glass-button" href="#atuacao">
+              <span class="iconify" data-icon="solar:arrow-down-linear"></span>
+              Entender a atua&ccedil;&atilde;o
+            </a>
+          </div>
+
+          <div class="hero-status animate-reveal delay-400">
+            <span class="payment-method selected"><span class="iconify" data-icon="solar:calendar-linear"></span> Fundada em 2016</span>
+            <span class="payment-method"><span class="iconify" data-icon="solar:global-linear"></span> Atua&ccedil;&atilde;o nacional</span>
+            <span class="payment-method"><span class="iconify" data-icon="solar:case-round-linear"></span> Empresas e institui&ccedil;&otilde;es</span>
+          </div>
+
+          <div class="site-badge-row animate-reveal delay-400">
+            <span class="site-badge"><span class="iconify" data-icon="solar:shield-check-linear"></span> Governan&ccedil;a</span>
+            <span class="site-badge"><span class="iconify" data-icon="solar:chart-2-linear"></span> Direcionamento</span>
+            <span class="site-badge"><span class="iconify" data-icon="solar:users-group-two-rounded-linear"></span> Mentoria de Neg&oacute;cios</span>
+          </div>
+        </div>
+
+        <div class="hero-stage scroll-reveal">
+          <div class="hero-stack">
+            <div class="hero-orb one"></div>
+            <div class="hero-orb two"></div>
+            <img alt="" class="hero-cloud one" src="Design Systems Referencias/componentes/wix.com_studio_design_inspiration_spac/assets/cloud_203_049ef964693f.webp"/>
+            <img alt="" class="hero-cloud two" src="Design Systems Referencias/componentes/wix.com_studio_design_inspiration_spac/assets/cloud_202_485bad49cfa2.webp"/>
+
+            <div class="hero-surface glass-card">
+              <div class="hero-main-card glow">
+                <img alt="Mentoria de Neg&oacute;cios ABMEN" class="hero-img" src="assets/fazemos_sua_empresa_crescer_21502c1da8fd.webp"/>
+                <div class="hero-main-overlay">
+                  <strong>ABMEN</strong>
+                  <p>
+                    Uma associa&ccedil;&atilde;o nacional dedicada a fortalecer a maturidade de empreendimentos por
+                    meio da Mentoria de Neg&oacute;cios com vis&atilde;o executiva e repert&oacute;rio de mercado.
+                  </p>
+                </div>
+              </div>
+
+              <div class="hero-float-card top glass-card">
+                <strong>Frentes de valor</strong>
+                <ul>
+                  <li><span class="iconify" data-icon="solar:layers-linear"></span> Diagn&oacute;stico e prioriza&ccedil;&atilde;o estrat&eacute;gica.</li>
+                  <li><span class="iconify" data-icon="solar:shield-check-linear"></span> Governan&ccedil;a, gest&atilde;o e maturidade.</li>
+                  <li><span class="iconify" data-icon="solar:clipboard-check-linear"></span> Direcionamento com menos improviso.</li>
+                </ul>
+              </div>
+
+              <div class="hero-clip">
+                <img alt="Sess&atilde;o de Mentoria de Neg&oacute;cios" src="assets/sessao-de-mentoria-gratuita-ab_ba99d12f6f20.webp"/>
+                <div class="hero-clip-caption">Conversa inicial com leitura executiva</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="ds-section is-light" id="atuacao">
+    <div class="ds-heading-row scroll-reveal">
+      <div class="ds-section-label">01 / Atua&ccedil;&atilde;o</div>
+      <div>
+        <h2 class="ds-section-title">Uma leitura profissional para decis&otilde;es que impactam crescimento.</h2>
+        <p class="ds-section-copy">
+          O papel da ABMEN n&atilde;o &eacute; apenas orientar. &Eacute; ajudar empresas e institui&ccedil;&otilde;es a
+          ganhar maturidade, estrutura de decis&atilde;o e vis&atilde;o estrat&eacute;gica em momentos em que o pr&oacute;ximo passo precisa ser melhor do que o anterior.
+        </p>
+      </div>
+    </div>
+
+    <div class="capability-grid">
+      <article class="site-feature-card scroll-reveal">
+        <div class="feature-icon"><span class="iconify" data-icon="solar:radar-2-linear"></span></div>
+        <h3>Diagn&oacute;stico executivo</h3>
+        <p>Leitura objetiva do momento do neg&oacute;cio para identificar gargalos, pontos de decis&atilde;o, maturidade de gest&atilde;o e prioridades reais.</p>
+      </article>
+
+      <article class="site-feature-card scroll-reveal">
+        <div class="feature-icon"><span class="iconify" data-icon="solar:graph-up-linear"></span></div>
+        <h3>Direcionamento estrat&eacute;gico</h3>
+        <p>Conecta cen&aacute;rio, posicionamento e execu&ccedil;&atilde;o para que crescimento n&atilde;o aconte&ccedil;a sem crit&eacute;rio, sequ&ecirc;ncia ou governan&ccedil;a.</p>
+      </article>
+
+      <article class="site-feature-card scroll-reveal">
+        <div class="feature-icon"><span class="iconify" data-icon="solar:users-group-two-rounded-linear"></span></div>
+        <h3>Repert&oacute;rio compartilhado</h3>
+        <p>Profissionais associados somam experi&ecirc;ncias e compet&ecirc;ncias para contribuir positivamente com o ecossistema e com a economia como um todo.</p>
+      </article>
+    </div>
+
+    <div class="method-grid">
+      <article class="method-card scroll-reveal">
+        <span class="step-index">01</span>
+        <h3>Entender o contexto</h3>
+        <p>Mapear o momento da empresa, o grau de maturidade e os principais pontos de tens&atilde;o para a lideran&ccedil;a.</p>
+      </article>
+      <article class="method-card scroll-reveal">
+        <span class="step-index">02</span>
+        <h3>Definir prioridades</h3>
+        <p>Separar urg&ecirc;ncia de prioridade e transformar complexidade em uma agenda mais clara e execut&aacute;vel.</p>
+      </article>
+      <article class="method-card scroll-reveal">
+        <span class="step-index">03</span>
+        <h3>Conectar experi&ecirc;ncia</h3>
+        <p>Acionar repert&oacute;rio pr&aacute;tico de Mentoria de Neg&oacute;cios para sustentar decis&otilde;es mais maduras.</p>
+      </article>
+      <article class="method-card scroll-reveal">
+        <span class="step-index">04</span>
+        <h3>Evoluir com consist&ecirc;ncia</h3>
+        <p>Fortalecer governan&ccedil;a, gest&atilde;o e vis&atilde;o de longo prazo para que o neg&oacute;cio cres&ccedil;a com mais base.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="ds-section is-dark" id="impacto">
+    <div class="ds-heading-row scroll-reveal">
+      <div class="ds-section-label">02 / Direcionamento</div>
+      <div>
+        <h2 class="ds-section-title">A ABMEN atua onde crescimento exige mais maturidade.</h2>
+        <p class="ds-section-copy">
+          Em empresas e ambientes de inova&ccedil;&atilde;o, os desafios costumam se repetir: crescimento sem estrutura, lideran&ccedil;as sobrecarregadas, opera&ccedil;&atilde;o difusa e pouca clareza sobre a melhor decis&atilde;o seguinte.
+        </p>
+      </div>
+    </div>
+
+    <div class="site-stat-grid">
+      <article class="site-stat-card scroll-reveal">
+        <span class="eyebrow">Fundamento</span>
+        <h3>Estrat&eacute;gia com m&eacute;todo</h3>
+        <p>A Mentoria de Neg&oacute;cios deixa de ser opini&atilde;o dispersa e passa a ser um processo de leitura e direcionamento com crit&eacute;rio.</p>
+      </article>
+
+      <article class="site-stat-card scroll-reveal">
+        <span class="eyebrow">Gest&atilde;o</span>
+        <h3>Mais clareza operacional</h3>
+        <p>Boas decis&otilde;es dependem de sequ&ecirc;ncia, foco e capacidade de traduzir estrat&eacute;gia em prioridades compreens&iacute;veis.</p>
+      </article>
+
+      <article class="site-stat-card scroll-reveal">
+        <span class="eyebrow">Governan&ccedil;a</span>
+        <h3>Maturidade empresarial</h3>
+        <p>Quando lideran&ccedil;a, processos e responsabiliza&ccedil;&atilde;o amadurecem, o crescimento passa a ter base mais sustent&aacute;vel.</p>
+      </article>
+    </div>
+
+    <div class="ds-panel-grid" style="margin-top: 18px;">
+      <div class="ds-panel dark scroll-reveal">
+        <h3>Quando a ABMEN faz mais sentido</h3>
+        <p>
+          Especialmente quando o neg&oacute;cio cresce com desorganiza&ccedil;&atilde;o, quando faltam repert&oacute;rio e
+          vis&atilde;o externa qualificada, ou quando o momento pede reestrutura&ccedil;&atilde;o, sucess&atilde;o, inova&ccedil;&atilde;o ou reposicionamento.
+        </p>
+        <div class="ds-inline-list">
+          <span>crescimento</span>
+          <span>transi&ccedil;&atilde;o</span>
+          <span>sucess&atilde;o</span>
+          <span>expans&atilde;o</span>
+          <span>governan&ccedil;a</span>
+        </div>
+      </div>
+
+      <div class="ds-panel dark scroll-reveal">
+        <h3>O resultado esperado</h3>
+        <p>
+          Menos improviso, melhor leitura de cen&aacute;rio, conversas mais maduras entre lideran&ccedil;a e uma
+          empresa mais preparada para tomar decis&otilde;es que sustentem valor no longo prazo.
+        </p>
+      </div>
+    </div>
+
+    <div class="showcase-grid">
+      <article class="site-showcase-card scroll-reveal">
+        <img alt="Energy Summit 2025" src="assets/CASES-energy-summit-2025_a8319379f471.png"/>
+        <div class="site-showcase-overlay">
+          <h3>Presen&ccedil;a em ambientes estrat&eacute;gicos</h3>
+          <p>Atua&ccedil;&atilde;o em ecossistemas que exigem repert&oacute;rio, articula&ccedil;&atilde;o e leitura de mercado.</p>
+        </div>
+      </article>
+
+      <article class="site-showcase-card scroll-reveal">
+        <img alt="Rio2C 2025" src="assets/CASES-rio2c-2025_4e70cfcbb33e.png"/>
+        <div class="site-showcase-overlay">
+          <h3>Conex&atilde;o com inova&ccedil;&atilde;o</h3>
+          <p>Neg&oacute;cios, criatividade, tecnologia e lideran&ccedil;a tratados como partes de um mesmo processo de amadurecimento.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section class="ds-section is-light" id="ecossistema">
+    <div class="ds-heading-row scroll-reveal">
+      <div class="ds-section-label">03 / Ecossistema</div>
+      <div>
+        <h2 class="ds-section-title">Conex&atilde;o entre mentoria, empreendedorismo e inova&ccedil;&atilde;o.</h2>
+        <p class="ds-section-copy">
+          A ABMEN nasce de um processo de matura&ccedil;&atilde;o do ecossistema. Por isso, o site organiza a leitura
+          em torno de rela&ccedil;&otilde;es claras entre empresas, institui&ccedil;&otilde;es, lideran&ccedil;as e ambientes onde repert&oacute;rio circula.
+        </p>
+      </div>
+    </div>
+
+    <div class="ds-panel-grid">
+      <div class="ds-panel light scroll-reveal">
+        <h3>Onde a ABMEN se insere</h3>
+        <p>Em contextos empresariais e institucionais onde maturidade, crescimento e tomada de decis&atilde;o precisam conversar com mais profundidade.</p>
+        <div class="logo-ribbon">
+          <span>PMEs</span>
+          <span>lideran&ccedil;as</span>
+          <span>institui&ccedil;&otilde;es</span>
+          <span>startups</span>
+          <span>ecossistemas</span>
+          <span>inova&ccedil;&atilde;o</span>
+        </div>
+      </div>
+
+      <div class="ds-panel dark scroll-reveal">
+        <h3>Como isso melhora a experi&ecirc;ncia do site</h3>
+        <p>O layout prioriza narrativa objetiva, leitura r&aacute;pida e pontos de entrada claros para o usu&aacute;rio entender o papel da ABMEN sem excesso de ru&iacute;do visual ou redund&acirc;ncia de a&ccedil;&atilde;o.</p>
+      </div>
+    </div>
+
+    <div class="showcase-grid">
+      <a class="site-showcase-card scroll-reveal" href="https://desafio.cor.rio/" rel="noreferrer" target="_blank">
+        <img alt="COR" src="assets/COR-scaled_20d53579ef6f.webp"/>
+        <div class="site-showcase-overlay">
+          <h3>COR</h3>
+          <p>Projetos e iniciativas que ampliam vis&atilde;o de futuro para neg&oacute;cios, territ&oacute;rios e lideran&ccedil;as.</p>
+        </div>
+      </a>
+
+      <a class="site-showcase-card scroll-reveal" href="https://www.rio2c.com/" rel="noreferrer" target="_blank">
+        <img alt="Rio2C" src="assets/Rio-2-C-v2-scaled_9d29b00abb76.webp"/>
+        <div class="site-showcase-overlay">
+          <h3>Rio2C</h3>
+          <p>Um ambiente de troca, inova&ccedil;&atilde;o e neg&oacute;cios que dialoga diretamente com lideran&ccedil;a e transforma&ccedil;&atilde;o.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="ds-section is-light" id="conteudo">
+    <div class="ds-heading-row scroll-reveal">
+      <div class="ds-section-label">04 / Conte&uacute;do</div>
+      <div>
+        <h2 class="ds-section-title">Leitura executiva para quem precisa decidir melhor.</h2>
+        <p class="ds-section-copy">
+          O conte&uacute;do refor&ccedil;a a proposta de valor do site: linguagem pr&aacute;tica, repert&oacute;rio de mercado e temas que ajudam empres&aacute;rios e lideran&ccedil;as a amadurecer a opera&ccedil;&atilde;o.
+        </p>
+      </div>
+    </div>
+
+    <div class="site-article-grid">
+      <article class="elementor-post__card ds-post-card scroll-reveal">
+        <a class="elementor-post__thumbnail__link" href="https://abmen.org.br/governanca-para-mentores-de-negocios/">
+          <img alt="Governan&ccedil;a para Mentores de Neg&oacute;cios" src="assets/ilustracao-silvina-ramal-222_0846d4ad7c78.webp"/>
+        </a>
+        <div class="elementor-post__text">
+          <span class="payment-method selected">Governan&ccedil;a</span>
+          <h4><a href="https://abmen.org.br/governanca-para-mentores-de-negocios/">Governan&ccedil;a para Mentores de Neg&oacute;cios</a></h4>
+          <p>Estrutura, responsabilidade e maturidade aplicadas ao contexto empresarial.</p>
+        </div>
+      </article>
+
+      <article class="elementor-post__card ds-post-card scroll-reveal">
+        <a class="elementor-post__thumbnail__link" href="https://abmen.org.br/transformacao-digital-que-gera-valor-em-pmes/">
+          <img alt="Transforma&ccedil;&atilde;o digital que gera valor em PMEs" src="assets/ilustracao-vinicius-sasaki-tra_24977ee3e64c.webp"/>
+        </a>
+        <div class="elementor-post__text">
+          <span class="payment-method">Estrat&eacute;gia</span>
+          <h4><a href="https://abmen.org.br/transformacao-digital-que-gera-valor-em-pmes/">Transforma&ccedil;&atilde;o digital que gera valor em PMEs</a></h4>
+          <p>Tecnologia com foco em valor real, decis&atilde;o e efetividade operacional.</p>
+        </div>
+      </article>
+
+      <article class="elementor-post__card ds-post-card scroll-reveal">
+        <a class="elementor-post__thumbnail__link" href="https://abmen.org.br/por-que-todo-empreendedor-precisa-de-mentoria-de-negocios-hoje/">
+          <img alt="Por que todo empreendedor precisa de mentoria" src="assets/ilustracao-silvio-bitencourt_df2e7c36c8c4.webp"/>
+        </a>
+        <div class="elementor-post__text">
+          <span class="payment-method">Mentoria</span>
+          <h4><a href="https://abmen.org.br/por-que-todo-empreendedor-precisa-de-mentoria-de-negocios-hoje/">Por que todo empreendedor precisa de mentoria hoje</a></h4>
+          <p>Uma leitura direta sobre repert&oacute;rio, dire&ccedil;&atilde;o e sustentabilidade do neg&oacute;cio.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="section-actions scroll-reveal">
+      <a class="elementor-button elementor-button-link elementor-size-sm button-sheen" href="https://abmen.org.br/artigos/">
+        <span class="elementor-button-content-wrapper">
+          <span class="elementor-button-text">Ver todos os artigos</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <section class="ds-section is-dark" id="contato">
+    <div class="ds-heading-row scroll-reveal">
+      <div class="ds-section-label">05 / Contato</div>
+      <div>
+        <h2 class="ds-section-title">Converse com a ABMEN com uma agenda mais clara.<span class="info-tooltip" data-tooltip="Contato inicial para mapear contexto, prioridades e prÃ³ximos passos com visÃ£o executiva.">i</span></h2>
+        <p class="ds-section-copy">
+          O fechamento da jornada foi pensado para reduzir fric&ccedil;&atilde;o: apresentar contexto, explicar a utilidade da conversa e abrir um contato simples com a equipe.
+        </p>
+      </div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card dark scroll-reveal">
+        <img alt="ABMEN" src="assets/abmen_logo_footer_b060d471d54d.webp" style="width: 180px; max-width: 100%;"/>
+        <p style="margin-top: 18px;">
+          Fundada em 2016, a ABMEN assumiu sua fun&ccedil;&atilde;o nacional de comunicar a relev&acirc;ncia dos Mentores de Neg&oacute;cios&reg; e colaborar positivamente com o ambiente de empreendedorismo e com a economia.
+        </p>
+
+        <ul class="contact-list">
+          <li><span class="iconify" data-icon="solar:letter-linear"></span><span>contato@abmen.org.br</span></li>
+          <li><span class="iconify" data-icon="solar:global-linear"></span><span>www.abmen.org.br</span></li>
+          <li><span class="iconify" data-icon="solar:chat-round-line-linear"></span><span>Solicita&ccedil;&otilde;es sobre a ABMEN, Mentoria de Neg&oacute;cios e direcionamento inicial.</span></li>
+        </ul>
+      </div>
+
+      <form class="contact-card light scroll-reveal" id="site-contact-form">
+        <h3>Enviar mensagem</h3>
+        <p>Preencha os dados e o site abre seu cliente de e-mail com a mensagem estruturada para a equipe da ABMEN.</p>
+
+        <div class="form-grid" style="margin-top: 18px;">
+          <div>
+            <label class="elementor-field-label" for="contact-name">Nome</label>
+            <input class="elementor-field elementor-size-sm elementor-field-textual" id="contact-name" name="name" placeholder="Seu nome" required="required" type="text"/>
+          </div>
+          <div>
+            <label class="elementor-field-label" for="contact-email">E-mail</label>
+            <input class="elementor-field elementor-size-sm elementor-field-textual" id="contact-email" name="email" placeholder="voce@empresa.com.br" required="required" type="email"/>
+          </div>
+          <div class="full">
+            <label class="elementor-field-label" for="contact-subject">Assunto</label>
+            <input class="elementor-field elementor-size-sm elementor-field-textual" id="contact-subject" name="subject" placeholder="Como a ABMEN pode apoiar sua organiza&ccedil;&atilde;o?" required="required" type="text"/>
+          </div>
+          <div class="full">
+            <label class="elementor-field-label" for="contact-message">Mensagem</label>
+            <textarea class="elementor-field elementor-size-sm elementor-field-textual" id="contact-message" name="message" placeholder="Descreva brevemente o momento da empresa, institui&ccedil;&atilde;o ou lideran&ccedil;a." required="required"></textarea>
+          </div>
+          <div class="full hero-actions">
+            <button class="elementor-button elementor-button-link elementor-size-sm button-sheen" type="submit">
+              <span class="elementor-button-content-wrapper">
+                <span class="elementor-button-text">Abrir e-mail</span>
+              </span>
+            </button>
+            <a class="glass-button" href="https://abmen.org.br/a-abmen/">
+              <span class="iconify" data-icon="solar:arrow-right-linear"></span>
+              Conhecer a associa&ccedil;&atilde;o
+            </a>
+          </div>
+          <p class="helper-text full" id="form-feedback">A experi&ecirc;ncia foi simplificada para o usu&aacute;rio chegar ao contato sem formul&aacute;rio pesado nem etapas desnecess&aacute;rias.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="site-footer-card scroll-reveal">
+      <div>
+        <div class="site-footer-brand">
+          <img alt="ABMEN" src="assets/abmen-qoqinya2chitmldtwo08xaky_178a828738d2.webp"/>
+          <div>
+            <strong>ABMEN</strong>
+            <span>Interface institucional v2 baseada no design system de refer&ecirc;ncia em <code>assets/design_system_v1.html</code>.</span>
+          </div>
+        </div>
+        <div class="footer-note">Layout novo, mais executivo, com leitura clara, hierarquia melhor resolvida, motion mais contido e uso consistente dos componentes do sistema visual.</div>
+      </div>
+      <div class="site-footer-links">
+        <a href="https://abmen.org.br/a-abmen/">A ABMEN</a>
+        <a href="https://abmen.org.br/cursos-programas/">Cursos &amp; Programas</a>
+        <a href="https://abmen.org.br/artigos/">Artigos</a>
+        <a href="#contato">Contato</a>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<div class="site-modal" data-modal="executive-modal" role="dialog" aria-modal="true" aria-label="Agendar conversa executiva">
+  <div class="site-modal-card">
+    <h3>Sess&atilde;o Executiva ABMEN</h3>
+    <p>Uma conversa inicial para entender o momento da sua organiza&ccedil;&atilde;o e indicar o melhor ponto de partida com Mentoria de Neg&oacute;cios.</p>
+    <ul class="site-modal-list">
+      <li><span class="iconify" data-icon="solar:check-circle-linear"></span><span>Mapeamento r&aacute;pido de contexto e prioridades.</span></li>
+      <li><span class="iconify" data-icon="solar:check-circle-linear"></span><span>Direcionamento de pr&oacute;ximos passos com crit&eacute;rio executivo.</span></li>
+      <li><span class="iconify" data-icon="solar:check-circle-linear"></span><span>Encaminhamento para equipe e agenda de contato.</span></li>
+    </ul>
+    <div class="site-modal-actions">
+      <a class="elementor-button elementor-button-link elementor-size-sm button-sheen" data-close-modal href="#contato">
+        <span class="elementor-button-content-wrapper"><span class="elementor-button-text">Ir para contato</span></span>
+      </a>
+      <button class="glass-button" data-close-modal type="button">Fechar</button>
+    </div>
+  </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(".scroll-reveal").forEach(function (element) {
+    revealObserver.observe(element);
+  });
+
+  var modal = document.querySelector("[data-modal='executive-modal']");
+  if (modal) {
+    document.querySelectorAll("[data-open-modal='executive-modal']").forEach(function (button) {
+      button.addEventListener("click", function () {
+        modal.classList.add("is-open");
+      });
+    });
+
+    document.querySelectorAll("[data-close-modal]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        modal.classList.remove("is-open");
+      });
+    });
+
+    modal.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        modal.classList.remove("is-open");
+      }
+    });
+  }
+
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.fromTo(".hero-title-line", {
+      yPercent: 120,
+      opacity: 0
+    }, {
+      yPercent: 0,
+      opacity: 1,
+      stagger: 0.08,
+      duration: 1.05,
+      ease: "power4.out",
+      delay: 0.14
+    });
+
+    gsap.fromTo(".hero-desc, .hero-actions, .hero-status", {
+      y: 28,
+      opacity: 0
+    }, {
+      y: 0,
+      opacity: 1,
+      stagger: 0.08,
+      duration: 0.85,
+      ease: "power3.out",
+      delay: 0.28
+    });
+
+    gsap.utils.toArray(".hero-float-card").forEach(function (card, index) {
+      gsap.to(card, {
+        y: index % 2 === 0 ? -10 : 10,
+        x: index === 1 ? 8 : 0,
+        repeat: -1,
+        yoyo: true,
+        duration: 5.4 + index,
+        ease: "sine.inOut"
+      });
+    });
+
+    gsap.to(".hero-main-card img", {
+      yPercent: 6,
+      scale: 1.08,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    gsap.utils.toArray(".site-feature-card, .site-showcase-card, .site-stat-card, .elementor-post__card.ds-post-card, .ds-panel, .method-card, .contact-card").forEach(function (card) {
+      gsap.fromTo(card, {
+        y: 32,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 88%"
+        }
+      });
+    });
+  }
+
+  var contactForm = document.getElementById("site-contact-form");
+  var formFeedback = document.getElementById("form-feedback");
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (!contactForm.reportValidity()) {
+        return;
+      }
+
+      var name = document.getElementById("contact-name").value.trim();
+      var email = document.getElementById("contact-email").value.trim();
+      var subject = document.getElementById("contact-subject").value.trim();
+      var message = document.getElementById("contact-message").value.trim();
+      var body = [
+        "Nome: " + name,
+        "E-mail: " + email,
+        "",
+        message
+      ].join("\n");
+
+      if (formFeedback) {
+        formFeedback.textContent = "Abrindo seu cliente de e-mail com a mensagem preenchida...";
+      }
+
+      window.location.href = "mailto:contato@abmen.org.br?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    });
+  }
+
+  var canvas = document.getElementById("canvas");
+  if (!canvas) {
+    return;
+  }
+
+  var context = canvas.getContext("2d");
+  if (!context) {
+    return;
+  }
+
+  var pointer = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.35 };
+  var particles = [];
+  var particleCount = 34;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function buildParticles() {
+    particles = [];
+    for (var i = 0; i < particleCount; i += 1) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.26,
+        vy: (Math.random() - 0.5) * 0.26,
+        r: 1.2 + Math.random() * 1.6
+      });
+    }
+  }
+
+  function drawMesh() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(function (particle) {
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+
+      if (particle.x < -20 || particle.x > canvas.width + 20) {
+        particle.vx *= -1;
+      }
+
+      if (particle.y < -20 || particle.y > canvas.height + 20) {
+        particle.vy *= -1;
+      }
+
+      var distanceToPointer = Math.hypot(pointer.x - particle.x, pointer.y - particle.y);
+      if (distanceToPointer < 140) {
+        particle.x += (particle.x - pointer.x) * 0.0018;
+        particle.y += (particle.y - pointer.y) * 0.0018;
+      }
+
+      context.beginPath();
+      context.fillStyle = distanceToPointer < 160 ? "rgba(29,233,14,0.72)" : "rgba(255,255,255,0.18)";
+      context.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
+      context.fill();
+    });
+
+    for (var a = 0; a < particles.length; a += 1) {
+      for (var b = a + 1; b < particles.length; b += 1) {
+        var dx = particles[a].x - particles[b].x;
+        var dy = particles[a].y - particles[b].y;
+        var distance = Math.hypot(dx, dy);
+
+        if (distance < 165) {
+          var alpha = (1 - distance / 165) * 0.16;
+          context.beginPath();
+          context.strokeStyle = "rgba(116,217,255," + alpha.toFixed(3) + ")";
+          context.lineWidth = 1;
+          context.moveTo(particles[a].x, particles[a].y);
+          context.lineTo(particles[b].x, particles[b].y);
+          context.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(drawMesh);
+  }
+
+  resizeCanvas();
+  buildParticles();
+  drawMesh();
+
+  window.addEventListener("resize", function () {
+    resizeCanvas();
+    buildParticles();
+  });
+
+  window.addEventListener("mousemove", function (event) {
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && modal) {
+      modal.classList.remove("is-open");
+    }
+  });
+});
+</script>
+</body>
+</html>
+
